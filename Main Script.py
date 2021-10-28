@@ -70,4 +70,37 @@ def dataPlot(data):
     plt.ylim([0, np.max(y)+3])
     plt.show()
     
+   
+# Del, der ikke virker:
+
+    datanp = np.array(data)
+shape = np.shape(datanp)
+nr_rows = shape[0]
+x1 = np.zeros(b1)
+x2 = np.zeros(b2)
+x3 = np.zeros(b3)
+x4 = np.zeros(b4)
+y1 = np.zeros(b1)
+y2 = np.zeros(b2)
+y3 = np.zeros(b3)
+y4 = np.zeros(b4)
+
+   
+for i in range(nr_rows):
+    if data.loc[i,2] == 1:
+        x1[i] = data.loc[i,0]
+        y1[i] = data.loc[i,1]
+        
+    elif data.loc[i,2] == 2:
+        x2[i] = data.loc[i,0]
+        y2[i] = data.loc[i,1]
+        
+    elif data.loc[i,2] == 3:
+        x3[i] = data.loc[i,0]
+        y3[i] = data.loc[i,1]
+        
+    if data.loc[i,2] == 4:
+        x4[i] = data.loc[i,0]
+        y4[i] = data.loc[i,1]
+print(x1)
 # 4: Hoved-script:
