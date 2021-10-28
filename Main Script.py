@@ -25,11 +25,11 @@ def dataLoad(filename):
         if data.loc[i,0] < 10 or data.loc[i,0] > 60:
             data = data.drop(i,axis=0)
         
-        #Removing rows with negative growth rate    
+        # Removing rows with negative growth rate    
         elif data.loc[i,1] <0:
             data = data.drop(i,axis=0)
         
-        #Removing rows with bacteria ID not matching either 1, 2, 3 or 4
+        # Removing rows with bacteria ID not matching either 1, 2, 3 or 4
         elif data.loc[i,2] not in [1,2,3,4]:
             data = data.drop(i,axis=0)
     return data
