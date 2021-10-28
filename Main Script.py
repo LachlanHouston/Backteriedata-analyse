@@ -2,7 +2,7 @@
 """
 Created on Wed Oct 27 16:04:58 2021
 
-@author: Lachlan Houston(s214593) og Frederik Ravnborg(sxxxxxx)
+@author: Lachlan Houston(s214593) og Frederik Ravnborg(s204078)
 """
 import math
 import numpy as np
@@ -16,8 +16,8 @@ def dataLoad(filename):
     # Calculating the number of rows in the matrix
     datanp = np.array(data)
     shape = np.shape(datanp)
-    nr_rows = shape[0]
-    
+    nr_rows = shape[0]   
+
     # Creating a for loop that goes through each row
     for i in range(nr_rows):
         
@@ -130,7 +130,31 @@ print(dataStatistics(data, statistic))
 
 # 3: Data plot function:
 def dataPlot(data):
-    # Insert your code here
-    return
+        data = dataLoad("test.txt")
+    
+    # Creating an array containing all the bacteria types
+    bacteria_type = np.array(data[2])
+    
+    # Computing how many occurences each bacteria has in bacteria_type
+    b1 = np.sum(bacteria_type == 1)
+    b2 = np.sum(bacteria_type == 2)
+    b3 = np.sum(bacteria_type == 3)
+    b4 = np.sum(bacteria_type == 4)
+    
+    # Defining the x and y axis
+    x = ['1', '2', '3', '4']
+    y = np.array([b1,b2,b3,b4])
+    
+    # Designing the plot
+    plt.bar(x[0], y[0], color="g")
+    plt.bar(x[1], y[1], color="b")
+    plt.bar(x[2], y[2], color="y")
+    plt.bar(x[3], y[3], color="r")
+    plt.title("Number of each bacteria type")
+    plt.xlabel("Bacteria type")
+    plt.ylabel("Number of bacteria")
+    plt.xlim([-0.5, 3.5])
+    plt.ylim([0, np.max(y)+3])
+    plt.show()
     
 # 4: Hoved-script:
