@@ -37,7 +37,7 @@ def dataLoad(filename):
 data = dataLoad("test.txt")
 statistic = " "
 
-# 2: Data statistik function:
+# 2: Data statistic function:
 # The Data statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
     
@@ -91,7 +91,7 @@ def dataStatistics(data, statistic):
         dim = np.shape(datanp)
         result = dim[0]
     
-    # This hanldes the Mean Cold Growth rate
+    # This handles the Mean Cold Growth rate
     if selection == 6:
         
         # Loop that loops through the data and finds the elements where the temperature is lower than 20
