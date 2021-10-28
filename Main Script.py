@@ -42,7 +42,7 @@ statistic = " "
 def dataStatistics(data, statistic):
     
     # Data is put into a Numpy Array
-    datanp = np.array(data)
+    statData = np.array(data)
 
     # Local variables are defined
     selection = 0
@@ -78,28 +78,28 @@ def dataStatistics(data, statistic):
     # This set of if-statements handle each equation, and are called based on which value selection has.
     # This handles Mean Temperature & Mean Growth Rate
     if selection == 1 or selection == 2:
-        result = np.mean(datanp[:,selection-1])
+        result = np.mean(statData[:,selection-1])
 
     
     # This handles Standard Temperature & Standard Growth Rate
     if selection == 3 or selection == 4:
-        result = np.std(datanp[:,selection-3])
+        result = np.std(statData[:,selection-3])
 
 
     # This informs the amount of rows in the data
     if selection == 5:
-        dim = np.shape(datanp)
+        dim = np.shape(statData)
         result = dim[0]
     
     # This handles the Mean Cold Growth rate
     if selection == 6:
         
         # Loop that loops through the data and finds the elements where the temperature is lower than 20
-        for i in range(len(datanp)):
-            if datanp[i,0] <= 20:
+        for i in range(len(statData)):
+            if statData[i,0] <= 20:
                 
                 # Stores the Growth rate data in one variable
-                cold += datanp[i,1]
+                cold += statData[i,1]
                 
                 # Keeps count of how many elements that fit the requirements
                 x += 1
@@ -111,11 +111,11 @@ def dataStatistics(data, statistic):
     if selection == 7:
         
         # Loop that loops through and finds the elements where the temperature is higher than 50
-        for i in range(len(datanp)):
-            if datanp[i,0] >= 50:
+        for i in range(len(statData)):
+            if statData[i,0] >= 50:
                 
                 # Stores the Growth rate data in one variable
-                hot += datanp[i,1]
+                hot += statData[i,1]
                 
                 # Keeps count of how many element that fit the requirements
                 x += 1
