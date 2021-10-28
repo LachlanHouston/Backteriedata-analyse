@@ -6,7 +6,7 @@ Created on Wed Oct 27 16:04:58 2021
 """
 import math
 import numpy as np
-import panda as pd
+import pandas as pd
 
 # 1: Data load function:
 def dataLoad(filename):
