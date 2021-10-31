@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-
 """
 Created on Wed Oct 27 16:04:58 2021
-
 @author: Lachlan Houston(s214593) og Frederik Ravnborg(s204078)
 """
 import math
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 
-# =============================================================================
 # 1: Data load function:
-# =============================================================================
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
-    data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
+    data = pd.read_csv("test.txt", header=None, delimiter=' ', usecols=[0,1,2])
     
     # Calculating the number of rows in the matrix
     datanp = np.array(data)
@@ -26,23 +22,21 @@ def dataLoad(filename):
         
         # Removing rows with a temperature smaller than 10 or greater than 60
         if data.loc[i,0] < 10 or data.loc[i,0] > 60:
-            print("Row ",i," contains an errornous temperature(",data.loc[i,0],") and has been removed")
             data = data.drop(i,axis=0)
         
         # Removing rows with negative growth rate    
         elif data.loc[i,1] <0:
-            print("Row ",i," contains an errornous growth rate(",data.loc[i,1],") and has been removed")
             data = data.drop(i,axis=0)
         
         # Removing rows with bacteria ID not matching either 1, 2, 3 or 4
         elif data.loc[i,2] not in [1,2,3,4]:
-            print("Row ",i," contains an errornous bacteria ID(",data.loc[i,2],") and has been removed")
             data = data.drop(i,axis=0)
     return data
 
-# =============================================================================
+data = dataLoad("test.txt")
+statistic = " "
+
 # 2: Data statistic function:
-# =============================================================================
 # The Data statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
     
@@ -127,15 +121,15 @@ def dataStatistics(data, statistic):
                 
         # Finds the mean of the values collected
         result = hot/x
-    return result 
+        
     # The number generated through the equations are returned as the float 'results'
     return result
 
-# =============================================================================
+print(dataStatistics(data, statistic))
+
 # 3: Data plot function:
-# =============================================================================
 def dataPlot(data):
-    data = dataLoad("test.txt")
+        data = dataLoad("test.txt")
     
     # Creating an array containing all the bacteria types
     bacteria_type = np.array(data[2])
@@ -161,68 +155,5 @@ def dataPlot(data):
     plt.xlim([-0.5, 3.5])
     plt.ylim([0, np.max(y)+3])
     plt.show()
-
-# =============================================================================
-# Main Script:
-# =============================================================================
-
-# Variables are declared
-exitScript = False
-specifiedData = False
-
-# =============================================================================
-# A loop is initiated that doesn't close until the user specifically closes the program
-# =============================================================================
-while exitScript == False:
-    print(" ","You have the following options of funtions to call:", "1) Load data from file","2) Generate statitistics from file data","3) Generate data plots from file data","4) Quit the program", 
-          "Please type what you want to do:",sep='\n')
     
-    # Choice contains the input that correlates to what the user wants to access
-    choice = input()
-    choice = choice.lower()
-    print(" ")
-    
-    # Choice number 1; calls the dataLoad function
-    if choice == "1" or choice == "load data" or choice == "load data from file":
-        
-        print("Please input the name of the file you want to load:")
-        
-        # Name of file the user wants to access, requires entering the filetype
-        name = input()
-        print(" ")
-        
-        # Changes specifiedData to record that data has been selected
-        specifiedData = True
-        
-        # Stores the data so dataStatistics can access it later
-        data = dataLoad(name)
-        
-    # Choice number 2; calls the dataStatistics function
-    elif choice == "2" or choice == "statistics" or choice == "generate statistics from file data":
-        
-        # Checks if data has been loaded yet
-        if specifiedData == True:
-            
-            # statistics is defined as an empty string
-            statistic = " "
-            
-            # Output from dataStatistics is printed here
-            print("The results are:", dataStatistics(data, statistic))
-        
-        # If data has not been loaded, the loop restarts
-        elif specifiedData == False:
-            print("The file of data has not yet been input, please load data (Option 1)")
-        
-    # Choice number 3; calls the dataPlot function
-    elif choice == "3" or choice == "plots" or choice == "generate data plots from file data":
-        print(None)
-        
-    # Choice number 4; ends the program
-    elif choice == "4" or choice == "quit" or choice == "quit the program":
-        
-        # Changes exitScript to True and therefore closes the loop and ends the program
-        print("Ending program.")
-        exitScript = True
-        
-    else:
-        print("You have entered an incorrect input, please try again")
+# 4: Hoved-script:
