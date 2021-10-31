@@ -9,7 +9,9 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# =============================================================================
 # 1: Data load function:
+# =============================================================================
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
     data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
@@ -38,7 +40,9 @@ def dataLoad(filename):
             data = data.drop(i,axis=0)
     return data
 
+# =============================================================================
 # 2: Data statistic function:
+# =============================================================================
 # The Data statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
     
@@ -127,7 +131,9 @@ def dataStatistics(data, statistic):
     # The number generated through the equations are returned as the float 'results'
     return result
 
+# =============================================================================
 # 3: Data plot function:
+# =============================================================================
 def dataPlot(data):
     data = dataLoad("test.txt")
     
@@ -156,13 +162,17 @@ def dataPlot(data):
     plt.ylim([0, np.max(y)+3])
     plt.show()
 
-### Main Script:
+# =============================================================================
+# Main Script:
+# =============================================================================
 
 # Variables are declared
 exitScript = False
 specifiedData = False
 
+# =============================================================================
 # A loop is initiated that doesn't close until the user specifically closes the program
+# =============================================================================
 while exitScript == False:
     print(" ","You have the following options of funtions to call:", "1) Load data from file","2) Generate statitistics from file data","3) Generate data plots from file data","4) Quit the program", 
           "Please type what you want to do:",sep='\n')
