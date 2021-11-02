@@ -83,27 +83,38 @@ y2 = np.zeros(b2)
 y3 = np.zeros(b3)
 y4 = np.zeros(b4)
 
+x = 0
+y = 0
+w = 0
+z = 0
 
-for i in range(9):
-    if data.loc[i,2] == 2:
-        x2[i] = data.loc[i,0]
-        y2[i] = data.loc[i,1]
+
+for i in range(shape[0]):
+    if datanp[i,2] == 2:
+        x2[x] = datanp[i,0]
+        y2[x] = datanp[i,1]
+        x += 1
         
-    elif data.loc[i,2] == 1:
-        x1[i] = data.loc[i,0]
-        y1[i] = data.loc[i,1]
-    
+    if datanp[i,2] == 1:
+        x1[y] = datanp[i,0]
+        y1[y] = datanp[i,1]
+        y += 1
         
-    elif data.loc[i,2] == 3:
-        x3[i] = data.loc[i,0]
-        y3[i] = data.loc[i,1]
+    if datanp[i,2] == 3:
+        x3[w] = datanp[i,0]
+        y3[w] = datanp[i,1]
+        w += 1
         
-    if data.loc[i,2] == 4:
-        x4[i] = data.loc[i,0]
-        y4[i] = data.loc[i,1]
+    if datanp[i,2] == 4:
+        x4[z] = datanp[i,0]
+        y4[z] = datanp[i,1]
+        z += 1
+        
 print(x1,y1)
+print(" ")
 print(x2,y2)
+print(" ")
 print(x3,y3)
+print(" ")
 print(x4,y4)
-
-# 4: Hoved-script:
+print(" ")
