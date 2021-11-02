@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 """
-Project 1 - Bacteria data analysis
+Project 1 - Bacteria Data Analysis
 
 Due: 11/11/2021
 
-By: Lachlan Houston(s214593) & Frederik Ravnborg(s204078)
+By: Lachlan Houston (s214593) & Frederik Ravnborg (s204078)
 """
+
 import math
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 
-# 1: Data Load function:
+
+# 1: Data Load function
+
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
     data = pd.read_csv("test.txt", header=None, delimiter=' ', usecols=[0,1,2])
