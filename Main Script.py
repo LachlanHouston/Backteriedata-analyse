@@ -7,7 +7,7 @@ import math
 import numpy as np
 import pandas as pd
 
-# 1: Data load function:
+# 1: Data Load function:
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
     data = pd.read_csv("test.txt", header=None, delimiter=' ', usecols=[0,1,2])
@@ -36,8 +36,10 @@ def dataLoad(filename):
 data = dataLoad("test.txt")
 statistic = " "
 
-# 2: Data statistic function:
-# The Data statistic function is defined, where data from file and a string 'statistics' are input:
+
+# 2: Data Statistic function:
+
+# The Data Statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
     
     # Data is put into a Numpy Array
@@ -127,7 +129,10 @@ def dataStatistics(data, statistic):
 
 print(dataStatistics(data, statistic))
 
-# 3: Data plot function:
+
+# 3: Data Plot function:
+
+# The Data Plot function is defined, where data returned from the Data Load function is the input
 def dataPlot(data):
     data = dataLoad("test.txt")
     
@@ -144,7 +149,7 @@ def dataPlot(data):
     x = ['1', '2', '3', '4']
     y = np.array([b1,b2,b3,b4])
     
-    # Designing the plot
+    # Designing and running the plot
     plt.bar(x[0], y[0], color="g")
     plt.bar(x[1], y[1], color="b")
     plt.bar(x[2], y[2], color="y")
@@ -180,27 +185,31 @@ def dataPlot(data):
     # This for loop fills the zero arrays with the temperature values on the x-axis and growth rate on the y-axis for each bacteria type seperately
     for i in range(nr_rows):
         
+        # Bacteria type 1
         if datanp[i,2] == 1:
             x1[y] = datanp[i,0]
             y1[y] = datanp[i,1]
             y += 1
         
+        # Bacteria type 2
         if datanp[i,2] == 2:
             x2[x] = datanp[i,0]
             y2[x] = datanp[i,1]
             x += 1
-            
+        
+        # Bacteria type 3
         if datanp[i,2] == 3:
             x3[w] = datanp[i,0]
             y3[w] = datanp[i,1]
             w += 1
-            
+        
+        # Bacteria type 4
         if datanp[i,2] == 4:
             x4[z] = datanp[i,0]
             y4[z] = datanp[i,1]
             z += 1
     
-    
+    # Sorting the elements on the x-coordinate lists and arranging the elements in the y-coordinate lists correspondingly, so that the x-y pairs are kept
     sort1 = x1.argsort()
     x1 = x1[sort1]
     y1 = y1[sort1]
@@ -217,7 +226,7 @@ def dataPlot(data):
     x4 = x4[sort4]
     y4 = y4[sort4]
     
-    # Designing the plot
+    # Designing and running the plot
     plt.plot(x1, y1, color="g")
     plt.plot(x2, y2, color="b")
     plt.plot(x3, y3, color="C1")
@@ -230,5 +239,5 @@ def dataPlot(data):
     plt.show()
 
 
-print(dataPlot())
+
 # 4: Hoved-script:
