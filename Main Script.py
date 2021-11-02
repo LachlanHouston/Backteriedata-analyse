@@ -66,7 +66,7 @@ def dataStatistics(data, statistic):
     while(selection == 0):
         
         # Input is gathered from user and afterwards lowercased
-        print("Please select the data that you'd like to calculate. You have the option of selecting the following: \nMean temperature \nMean growth rate \nStd temperature \nStd growth rate \nRows \nMean cold growth rate, \nMean hot growth rate")
+        print("Please select the data that you'd like to calculate. You have the option of selecting the following: \nMean Temperature \nMean Growth rate \nStd Temperature \nStd Growth rate \nRows \nMean Cold Growth rate \nMean Hot Growth rate")
         statistic = input()
         statistic = statistic.lower()
         
