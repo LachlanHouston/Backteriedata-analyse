@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 # 1: Data Load function
 
-# The Data Load function is defined, where the input is a text file
+# The Data Load function is defined, where the input is a file
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
     data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
@@ -36,7 +36,7 @@ def dataLoad(filename):
         elif data.loc[i,1] <0:
             data = data.drop(i,axis=0)
         
-        # Removing rows with bacteria ID not matching either 1, 2, 3 or 4
+        # Removing rows with bacteria type not matching either 1, 2, 3 or 4
         elif data.loc[i,2] not in [1,2,3,4]:
             data = data.drop(i,axis=0)
     return data
@@ -45,7 +45,7 @@ data = dataLoad("test.txt")
 statistic = " "
 
 
-# 2: Data Statistic function:
+# 2: Data Statistic function
 
 # The Data Statistic function is defined, where data from file and a string 'statistics' are input
 def dataStatistics(data, statistic):
@@ -66,7 +66,7 @@ def dataStatistics(data, statistic):
     while(selection == 0):
         
         # Input is gathered from user and afterwards lowercased
-        print("Please select the data that you'd like to calculate, you have the option of selecting the following: mean temperature, mean growth rate, std temperature, std growth rate, rows, mean cold growth rate, and mean hot growth rate")
+        print("Please select the data that you'd like to calculate. You have the option of selecting the following: \nMean temperature \nMean growth rate \nStd temperature \nStd growth rate \nRows \nMean cold growth rate, \nMean hot growth rate")
         statistic = input()
         statistic = statistic.lower()
         
@@ -138,7 +138,7 @@ def dataStatistics(data, statistic):
 print(dataStatistics(data, statistic))
 
 
-# 3: Data Plot function:
+# 3: Data Plot function
 
 # The Data Plot function is defined, where data returned from the Data Load function is the input
 def dataPlot(data):
@@ -248,4 +248,7 @@ def dataPlot(data):
 
 
 
-# 4: Hoved-script:
+# 4: Main Script
+
+
+
