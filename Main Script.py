@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Oct 27 16:04:58 2021
-@author: Lachlan Houston(s214593) og Frederik Ravnborg(s204078)
+Project 1 - Bacteria data analysis
+
+Due: 11/11/2021
+
+By: Lachlan Houston(s214593) & Frederik Ravnborg(s204078)
 """
 import math
 import numpy as np
