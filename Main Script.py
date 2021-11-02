@@ -1,63 +1,71 @@
 # -*- coding: utf-8 -*-
 """
-Project 1 - Bacteria Data Analysis
-
-Due: 11/11/2021
-
-By: Lachlan Houston (s214593) & Frederik Ravnborg (s204078)
+Created on Wed Oct 27 16:04:58 2021
+@author: Lachlan Houston(s214593) og Frederik Ravnborg(s204078)
 """
-
 import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-# 1: Data Load function
-
-# The Data Load function is defined, where the input is a file
+# =============================================================================
+# 1: Data load function:
+# =============================================================================
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
-    data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
+    while (True):
+        try:
+            data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
+            
+        except OSError:
+            print("An incorrect input was given, please try again"," ",sep='\n')
+            
+        else:
+            print("A file has been found and loaded")
+            # Calculating the number of rows in the matrix
+            datanp = np.array(data)
+            shape = np.shape(datanp)
+            nr_rows = shape[0]
+        
+            # Creating a for loop that goes through each row
+            for i in range(nr_rows):
+                
+                # Removing rows with a temperature smaller than 10 or greater than 60
+                if data.loc[i,0] < 10 or data.loc[i,0] > 60:
+                    print("Row ",i," contains an errornous temperature(",data.loc[i,0],") and has been removed")
+                    data = data.drop(i,axis=0)
+                
+                # Removing rows with negative growth rate    
+                elif data.loc[i,1] <0:
+                    print("Row ",i," contains an errornous growth rate(",data.loc[i,1],") and has been removed")
+                    data = data.drop(i,axis=0)
+                
+                # Removing rows with bacteria ID not matching either 1, 2, 3 or 4
+                elif data.loc[i,2] not in [1,2,3,4]:
+                    print("Row ",i," contains an errornous bacteria ID(",data.loc[i,2],") and has been removed")
+                    data = data.drop(i,axis=0)
+                    
+            data = data.reset_index(drop=True)
+            return data
+        break
     
-    # Calculating the number of rows in the matrix
-    datanp = np.array(data)
-    shape = np.shape(datanp)
-    nr_rows = shape[0]   
+    
 
-    # Creating a for loop that goes through each row
-    for i in range(nr_rows):
-        
-        # Removing rows with a temperature smaller than 10 or greater than 60
-        if data.loc[i,0] < 10 or data.loc[i,0] > 60:
-            data = data.drop(i,axis=0)
-        
-        # Removing rows with negative growth rate    
-        elif data.loc[i,1] <0:
-            data = data.drop(i,axis=0)
-        
-        # Removing rows with bacteria type not matching either 1, 2, 3 or 4
-        elif data.loc[i,2] not in [1,2,3,4]:
-            data = data.drop(i,axis=0)
-    return data
-
-data = dataLoad("test.txt")
-statistic = " "
-
-
-# 2: Data Statistic function
-
-# The Data Statistic function is defined, where data from file and a string 'statistics' are input
+# =============================================================================
+# 2: Data statistic function:
+# =============================================================================
+# The Data statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
-    
-    # Data is put into a Numpy Array
-    statData = np.array(data)
 
     # Local variables are defined
     selection = 0
     cold = 0
     hot = 0
-    x = 0
+    t = 0
+    
+    # Data is put into a Numpy Array
+    statData = np.array(data)
+    dim = np.shape(statData)
     
     # List of different commands that can be called
     commands = np.array(["mean temperature", "mean growth rate", "std temperature", "std growth rate", "rows", "mean cold growth rate","mean hot growth rate"])
@@ -66,7 +74,7 @@ def dataStatistics(data, statistic):
     while(selection == 0):
         
         # Input is gathered from user and afterwards lowercased
-        print("Please select the data that you'd like to calculate. You have the option of selecting the following: \nMean Temperature \nMean Growth rate \nStd Temperature \nStd Growth rate \nRows \nMean Cold Growth rate \nMean Hot Growth rate")
+        print("Please select the data that you'd like to calculate, you have the option of selecting the following: mean temperature, mean growth rate, std temperature, std growth rate, rows, mean cold growth rate, and mean hot growth rate")
         statistic = input()
         statistic = statistic.lower()
         
@@ -104,6 +112,7 @@ def dataStatistics(data, statistic):
     if selection == 6:
         
         # Loop that loops through the data and finds the elements where the temperature is lower than 20
+
         for i in range(len(statData)):
             if statData[i,0] <= 20:
                 
@@ -111,15 +120,21 @@ def dataStatistics(data, statistic):
                 cold += statData[i,1]
                 
                 # Keeps count of how many elements that fit the requirements
-                x += 1
+                t += 1
                 
         # Finds the mean of the values collected
-        result = cold/x
+        try:
+            result = cold/t
+            
+        except ZeroDivisionError:
+            print("There are no elements in the list")
+            result = 0
     
     # This handles the Mean Hot Growth rate
     if selection == 7:
         
         # Loop that loops through and finds the elements where the temperature is higher than 50
+        
         for i in range(len(statData)):
             if statData[i,0] >= 50:
                 
@@ -127,22 +142,23 @@ def dataStatistics(data, statistic):
                 hot += statData[i,1]
                 
                 # Keeps count of how many element that fit the requirements
-                x += 1
+                t += 1
                 
         # Finds the mean of the values collected
-        result = hot/x
-        
+        try:
+            result = hot/t
+            
+        except ZeroDivisionError:
+            print("There are no elements in the list")
+            result = 0
+
     # The number generated through the equations are returned as the float 'results'
     return result
 
-print(dataStatistics(data, statistic))
-
-
-# 3: Data Plot function
-
-# The Data Plot function is defined, where data returned from the Data Load function is the input
+# =============================================================================
+# 3: Data plot function:
+# =============================================================================
 def dataPlot(data):
-    data = dataLoad("test.txt")
     
     # Creating an array containing all the bacteria types
     bacteria_type = np.array(data[2])
@@ -246,8 +262,9 @@ def dataPlot(data):
     plt.legend(["Bacteria 1", "Bacteria 2", "Bacteria 3", "Bacteria 4"], loc ="upper left")
     plt.show()
 
-
-# 4: Main Script
+# =============================================================================
+# Main Script:
+# =============================================================================
 
 # Variables are declared
 exitScript = False
@@ -257,7 +274,7 @@ specifiedData = False
 # A loop is initiated that doesn't close until the user specifically closes the program
 # =============================================================================
 while exitScript == False:
-    print(" ","You have the following options of funtions to call:", "1) Load data from file","2) Generate statitistics from file data","3) Generate data plots from file data","4) Quit the program", 
+    print(" ","You have the following options of funtions to call:"," ", "1) Load data from file","2) Generate statitistics from file data","3) Generate data plots from file data","4) Quit the program", 
           "Please type what you want to do:",sep='\n')
     
     # Choice contains the input that correlates to what the user wants to access
@@ -282,6 +299,8 @@ while exitScript == False:
         
     # Choice number 2; calls the dataStatistics function
     elif choice == "2" or choice == "statistics" or choice == "generate statistics from file data":
+        safeData = data
+        
         
         # Checks if data has been loaded yet
         if specifiedData == True:
@@ -289,8 +308,89 @@ while exitScript == False:
             # statistics is defined as an empty string
             statistic = " "
             
+            # Variables for interval selecting
+            length = len(data)
+            xLower = 0
+            xUpper = 100
+            numberofRemovals = 0
+            
+            strings = np.array(["Temperature","Growth rate","Listeria","All"])
+            
+            while (True):
+                print("Do you want to apply a interval to the data you select?", "1) Yes", "2) No",sep='\n')
+                intervalSelection = input()
+                intervalSelection = intervalSelection.lower()
+                
+                if intervalSelection == "1" or intervalSelection == "yes":
+                    
+                    while (True):
+                        print("You have the option to create intervals based on collumn of data;","1) Temperature","2) Growth rate","3) Listeria","Please choose which data you want to access:", sep='\n')
+                        
+                        try:
+                            choiceofData = input()
+                            choiceofDataInt = int(choiceofData) - 1
+                            
+                        except ValueError:
+                            print("An incorrect input was given, please try again"," "," ",sep='\n')
+                            
+                        else:
+                            
+                            print("You have chosen ",strings[choiceofDataInt],"as data")
+                            break
+                            
+                    if choiceofData == "1" or choiceofData == "2":
+                        print("Please select desired lower limit")
+                        xLower = float(input())
+                        print(xLower)
+                        
+                        print("Please selected desired upper limit")
+                        xUpper = float(input())
+                        print(xUpper)
+                        
+                        print("Your interval has been set to", xLower, "< data <", xUpper)
+                        
+                        # Creating a for loop that goes through each row
+                        for i in range(length):
+                        
+                        # Removing rows with a data lower or higher than the given interval
+                            if data.loc[i,choiceofDataInt] < xLower or data.loc[i,choiceofDataInt] > xUpper:
+                                data = data.drop(i,axis=0)
+                                numberofRemovals += 1
+                                
+                        print("A total of ", numberofRemovals, "rows have been removed from the dataset, and ", length - numberofRemovals, "remain")
+                        print(data)
+                
+                        
+                    elif choiceofData == "3":
+                        print("Please input the Bacteria ID")
+                        bacteriaID = int(input())
+                        
+                        # Creating a for loop that goes through each row
+                        for i in range(length):
+                            if data.loc[i,choiceofDataInt] != bacteriaID:
+                                    data = data.drop(i,axis=0)
+                                    numberofRemovals += 1
+                    
+                        print("A total of ", numberofRemovals, "rows have been removed from the dataset, and ", length - numberofRemovals, "remain")
+                        print(data)
+                        
+                    
+                    break
+                    
+                elif intervalSelection == "2" or intervalSelection == "no":
+                    print("No interval has been added")
+                    xLower = 0
+                    xUpper = 100
+                    
+                    break
+                
+                else:
+                    print("You have entered an incorrect input, please try again"," ",sep='\n')
+            
             # Output from dataStatistics is printed here
             print("The results are:", dataStatistics(data, statistic))
+            
+            data = safeData
         
         # If data has not been loaded, the loop restarts
         elif specifiedData == False:
@@ -298,7 +398,7 @@ while exitScript == False:
         
     # Choice number 3; calls the dataPlot function
     elif choice == "3" or choice == "plots" or choice == "generate data plots from file data":
-        print(None)
+        print(dataPlot(data))
         
     # Choice number 4; ends the program
     elif choice == "4" or choice == "quit" or choice == "quit the program":
@@ -309,5 +409,3 @@ while exitScript == False:
         
     else:
         print("You have entered an incorrect input, please try again")
-
-
