@@ -15,9 +15,10 @@ import matplotlib.pyplot as plt
 
 # 1: Data Load function
 
+# The Data Load function is defined, where the input is a text file
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
-    data = pd.read_csv("test.txt", header=None, delimiter=' ', usecols=[0,1,2])
+    data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
     
     # Calculating the number of rows in the matrix
     datanp = np.array(data)
@@ -46,7 +47,7 @@ statistic = " "
 
 # 2: Data Statistic function:
 
-# The Data Statistic function is defined, where data from file and a string 'statistics' are input:
+# The Data Statistic function is defined, where data from file and a string 'statistics' are input
 def dataStatistics(data, statistic):
     
     # Data is put into a Numpy Array
