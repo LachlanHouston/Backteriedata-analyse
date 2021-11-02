@@ -129,7 +129,7 @@ print(dataStatistics(data, statistic))
 
 # 3: Data plot function:
 def dataPlot(data):
-        data = dataLoad("test.txt")
+    data = dataLoad("test.txt")
     
     # Creating an array containing all the bacteria types
     bacteria_type = np.array(data[2])
@@ -156,10 +156,12 @@ def dataPlot(data):
     plt.ylim([0, np.max(y)+3])
     plt.show()
     
-    data = dataLoad("test.txt")
+    # Creating a variable containing the number of rows in the dataset
     datanp = np.array(data)
     shape = np.shape(datanp)
     nr_rows = shape[0]
+    
+    # Creating a zero array for the x- and y-axis for each bacteria type with the correct length
     x1 = np.zeros(b1)
     x2 = np.zeros(b2)
     x3 = np.zeros(b3)
@@ -169,13 +171,15 @@ def dataPlot(data):
     y3 = np.zeros(b3)
     y4 = np.zeros(b4)
     
+    
     x = 0
     y = 0
     w = 0
     z = 0
     
-    
-    for i in range(shape[0]):
+    # This for loop fills the zero arrays with the temperature values on the x-axis and growth rate on the y-axis for each bacteria type seperately
+    for i in range(nr_rows):
+        
         if datanp[i,2] == 1:
             x1[y] = datanp[i,0]
             y1[y] = datanp[i,1]
@@ -213,7 +217,7 @@ def dataPlot(data):
     x4 = x4[sort4]
     y4 = y4[sort4]
     
-    
+    # Designing the plot
     plt.plot(x1, y1, color="g")
     plt.plot(x2, y2, color="b")
     plt.plot(x3, y3, color="C1")
