@@ -32,17 +32,17 @@ def dataLoad(filename):
                 
                 # Removing rows with a temperature smaller than 10 or greater than 60
                 if data.loc[i,0] < 10 or data.loc[i,0] > 60:
-                    print("Row ",i," contains an errornous temperature(",data.loc[i,0],") and has been removed")
+                    print("Row ",i," contains an errornous temperature (",data.loc[i,0],") and has been removed")
                     data = data.drop(i,axis=0)
                 
                 # Removing rows with negative growth rate    
                 elif data.loc[i,1] <0:
-                    print("Row ",i," contains an errornous growth rate(",data.loc[i,1],") and has been removed")
+                    print("Row ",i," contains an errornous growth rate (",data.loc[i,1],") and has been removed")
                     data = data.drop(i,axis=0)
                 
                 # Removing rows with bacteria ID not matching either 1, 2, 3 or 4
                 elif data.loc[i,2] not in [1,2,3,4]:
-                    print("Row ",i," contains an errornous bacteria ID(",data.loc[i,2],") and has been removed")
+                    print("Row ",i," contains an errornous bacteria ID (",data.loc[i,2],") and has been removed")
                     data = data.drop(i,axis=0)
                     
             data = data.reset_index(drop=True)
@@ -74,7 +74,7 @@ def dataStatistics(data, statistic):
     while(selection == 0):
         
         # Input is gathered from user and afterwards lowercased
-        print("Please select the data that you'd like to calculate, you have the option of selecting the following: mean temperature, mean growth rate, std temperature, std growth rate, rows, mean cold growth rate, and mean hot growth rate")
+        print("\nPlease select the data that you'd like to calculate. You have the option of selecting the following: \nMean Temperature \nMean Growth rate \nStd Temperature \nStd Growth rate \nRows \nMean Cold Growth rate \nMean Hot Growth rate")
         statistic = input()
         statistic = statistic.lower()
         
@@ -85,7 +85,7 @@ def dataStatistics(data, statistic):
             # Also breaks the loop
             if statistic == commands[i]:
                 selection = i+1
-                print(commands[i], " has been selected")
+                print(commands[i], "has been selected")
                 break
             
         # If an incorrect input has been given, selection will remain equal to 0, and the while loop starts again
@@ -261,6 +261,9 @@ def dataPlot(data):
     plt.xlim([0, 60])
     plt.legend(["Bacteria 1", "Bacteria 2", "Bacteria 3", "Bacteria 4"], loc ="upper left")
     plt.show()
+    
+    return("Generate data plots from file data has been selected\n\nThe first plot shows how many of each bacteria type there is in the dataset.\nThe second plot shows graphs representing growth rate by temperature for each selected bacteria type.")
+
 
 # =============================================================================
 # Main Script:
@@ -314,17 +317,17 @@ while exitScript == False:
             xUpper = 100
             numberofRemovals = 0
             
-            strings = np.array(["Temperature","Growth rate","Listeria","All"])
+            strings = np.array(["Temperature","Growth rate","Bacteria type","All"])
             
             while (True):
-                print("Do you want to apply a interval to the data you select?", "1) Yes", "2) No",sep='\n')
+                print("Do you want to apply an interval to the data you select?", "1) Yes", "2) No",sep='\n')
                 intervalSelection = input()
                 intervalSelection = intervalSelection.lower()
                 
                 if intervalSelection == "1" or intervalSelection == "yes":
                     
                     while (True):
-                        print("You have the option to create intervals based on collumn of data;","1) Temperature","2) Growth rate","3) Listeria","Please choose which data you want to access:", sep='\n')
+                        print("You have the option to create intervals based on the following types of data:","1) Temperature","2) Growth rate","3) Bacteria type","Please choose which data you want to access:", sep='\n')
                         
                         try:
                             choiceofData = input()
@@ -357,8 +360,7 @@ while exitScript == False:
                                 data = data.drop(i,axis=0)
                                 numberofRemovals += 1
                                 
-                        print("A total of ", numberofRemovals, "rows have been removed from the dataset, and ", length - numberofRemovals, "remain")
-                        print(data)
+                        print("A total of ", numberofRemovals, "rows have been removed from the dataset, and ", length - numberofRemovals, "remain.")
                 
                         
                     elif choiceofData == "3":
@@ -371,8 +373,7 @@ while exitScript == False:
                                     data = data.drop(i,axis=0)
                                     numberofRemovals += 1
                     
-                        print("A total of ", numberofRemovals, "rows have been removed from the dataset, and ", length - numberofRemovals, "remain")
-                        print(data)
+                        print("A total of ", numberofRemovals, "rows have been removed from the dataset, and", length - numberofRemovals, "remain.")
                         
                     
                     break
@@ -388,7 +389,7 @@ while exitScript == False:
                     print("You have entered an incorrect input, please try again"," ",sep='\n')
             
             # Output from dataStatistics is printed here
-            print("The results are:", dataStatistics(data, statistic))
+            print("The result is:", dataStatistics(data, statistic))
             
             data = safeData
         
