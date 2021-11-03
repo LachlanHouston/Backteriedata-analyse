@@ -1,7 +1,9 @@
-# -*- coding: utf-8 -*-
 """
-Created on Wed Oct 27 16:04:58 2021
-@author: Lachlan Houston(s214593) og Frederik Ravnborg(s204078)
+Project 1 - Bacteria Data Analysis
+
+Due: 11/11/2021
+
+By: Lachlan Houston (s214593) & Frederik Ravnborg (s204078)
 """
 import math
 import numpy as np
@@ -9,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # =============================================================================
-# 1: Data load function:
+# 1: Data Load function:
 # =============================================================================
 def dataLoad(filename):
     # Importing the data as a matrix using the panda module
@@ -52,9 +54,9 @@ def dataLoad(filename):
     
 
 # =============================================================================
-# 2: Data statistic function:
+# 2: Data Statistic function:
 # =============================================================================
-# The Data statistic function is defined, where data from file and a string 'statistics' are input:
+# The Data Statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
 
     # Local variables are defined
@@ -156,7 +158,7 @@ def dataStatistics(data, statistic):
     return result
 
 # =============================================================================
-# 3: Data plot function:
+# 3: Data Plot function:
 # =============================================================================
 def dataPlot(data):
     
@@ -395,7 +397,7 @@ while exitScript == False:
         
         # If data has not been loaded, the loop restarts
         elif specifiedData == False:
-            print("The file of data has not yet been input, please load data (Option 1)")
+            print("No data file has been loaded, please load data (Option 1)")
         
     # Choice number 3; calls the dataPlot function
     elif choice == "3" or choice == "plots" or choice == "generate data plots from file data":
