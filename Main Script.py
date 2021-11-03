@@ -178,7 +178,7 @@ def dataPlot(data):
     # Designing and running the plot
     plt.bar(x[0], y[0], color="g")
     plt.bar(x[1], y[1], color="b")
-    plt.bar(x[2], y[2], color="y")
+    plt.bar(x[2], y[2], color="C1")
     plt.bar(x[3], y[3], color="r")
     plt.title("Number of each bacteria type")
     plt.xlabel("Bacteria type")
