@@ -58,7 +58,6 @@ def dataLoad(filename):
 def dataStatistics(data, statistic):
 
     # Local variables are defined
-    selection = 0
     cold = 0
     hot = 0
     t = 0
@@ -68,9 +67,8 @@ def dataStatistics(data, statistic):
     
        
     # Input is gathered from user and afterwards lowercased
-    print("\nPlease select the data that you'd like to calculate. You have the option of selecting the following: \n1) Mean Temperature \n2) Mean Growth rate \n3) Std Temperature \n4) Std Growth rate \n5) Rows \n6) Mean Cold Growth rate \n7) Mean Hot Growth rate")
-    statisticChoice = input()
-    statisticChoice = statisticChoice.lower()
+    statisticChoice = statistic
+    # statisticChoice = statisticChoice.lower()
     
     # Choice number 1; computes the Mean Temperature
     if statisticChoice == "1" or statisticChoice == "mean temperature":
@@ -115,7 +113,6 @@ def dataStatistics(data, statistic):
             result = round(result,3)
             
         except ZeroDivisionError:
-            print("There are no elements in the list")
             result = 0
     
     # Choice number 7; computes the Mean Hot Growth rate       
@@ -137,13 +134,10 @@ def dataStatistics(data, statistic):
             result = round(result,3)
             
         except ZeroDivisionError:
-            print("There are no elements in the list")
             result = 0
             
     else:
-        print("An incorrect input was given, please try again")
-        
-
+        result = 0
 
     # The number generated through the equations are returned as the float 'results'
     return result
@@ -265,7 +259,17 @@ def dataPlot(data):
 # Variables are declared
 exitScript = False
 specifiedData = False
+
 filterActive = False
+filterTemp = False
+filterGrowth = False
+filterID = False
+
+xLower = 0
+xUpper = 0
+bacteriaID = 0
+
+statisticsStrings = np.array(["1","mean temperature","2","mean growth rate","3","std temperature","4","std growth rate","5","rows","6","mean cold growth rate","7","mean hot growth rate"])
 
 # =============================================================================
 # A loop is initiated that doesn't close until the user specifically closes the program
@@ -274,6 +278,15 @@ while exitScript == False:
 
     if filterActive == True:
         print("\nA filter is currently applied to the data")
+        
+        if filterTemp == True:
+            print("Temperature has been filtered by the interval:", xLower, "< data <", xUpper)
+            
+        if filterGrowth == True:
+            print("Growth rate has been filtered by the interval:", xLower, "< data <", xUpper)
+            
+        if filterID == True:
+            print("Bacteria Listeria has been filtered by the interval:", bacteriaID)
 
     
     print(" ","You have the following options:"," ", "1) Load data from file","2) Apply filter to data", "3) Generate statistics from file data","4) Generate data plots from file data","5) Quit the program",sep='\n')
@@ -305,8 +318,6 @@ while exitScript == False:
     
         if specifiedData == True:
             # Variables for interval selecting
-            xLower = 0
-            xUpper = 1000
             length = len(data)
             numberofRemovals = 0
             
@@ -342,6 +353,14 @@ while exitScript == False:
                     
                     print("Your interval has been set to", xLower, "< data <", xUpper)
                     
+                    if choiceofData == "1":
+                        print("Hello")
+                        filterTemp = True
+                            
+                    if choiceofData == "2":
+                        print("Hello")
+                        filterGrowth = True
+                    
                     # Creating a for loop that goes through each row
                     for i in range(length):
                     
@@ -350,21 +369,30 @@ while exitScript == False:
                             data = data.drop(i,axis=0)
                             numberofRemovals += 1
                             
+                    data = data.reset_index(drop=True)
                     print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
                     filterActive = True
                     
                 elif choiceofData == "3":
                     print("Please input the Bacteria type")
-                    bacteriaID = int(input())
+                    try:
+                        bacteriaID = int(input())
+                        
+                    except ValueError:
+                        print("You have entered an incorrect input, please try again")
+                        
+                    else:
+                        filterID = True
+                        
+                        # Creating a for loop that goes through each row
+                        for i in range(length):
+                            if data.loc[i,choiceofDataInt] != bacteriaID:
+                                    data = data.drop(i,axis=0)
+                                    numberofRemovals += 1
                     
-                    # Creating a for loop that goes through each row
-                    for i in range(length):
-                        if data.loc[i,choiceofDataInt] != bacteriaID:
-                                data = data.drop(i,axis=0)
-                                numberofRemovals += 1
-                
-                    print("A total of", numberofRemovals, "rows have been removed from the dataset, and" + str(length - numberofRemovals) + " remain.")
-                    filterActive = True
+                        print("A total of", numberofRemovals, "rows have been removed from the dataset, and" + str(length - numberofRemovals) + " remain.")
+                        
+                        filterActive = True
                 
                 break
                 
@@ -381,13 +409,18 @@ while exitScript == False:
         
         # Checks if data has been loaded yet
         if specifiedData == True:
+            print("\nPlease select the data that you'd like to calculate. You have the option of selecting the following: \n1) Mean Temperature \n2) Mean Growth rate \n3) Std Temperature \n4) Std Growth rate \n5) Rows \n6) Mean Cold Growth rate \n7) Mean Hot Growth rate")
             
             # Statistics is defined as an empty string
-            statistic = " "
+            statistic = input()
+            statistic = statistic.lower()
             
-            # Output from dataStatistics is printed here
-            print("The result is:", dataStatistics(data, statistic))
-                    
+            if dataStatistics(data, statistic) == 0:
+                print("An incorrect input was given, please try again")
+                
+            else:
+                print("The result is:", dataStatistics(data, statistic))
+
         # If data has not been loaded, the loop restarts
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
