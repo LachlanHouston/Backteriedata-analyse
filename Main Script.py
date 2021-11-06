@@ -187,7 +187,7 @@ def dataPlot(data):
     y3 = np.zeros(b3)
     y4 = np.zeros(b4)
     
-    
+    # Variables are defined
     x = 0
     y = 0
     w = 0
@@ -316,16 +316,18 @@ while exitScript == False:
     # Choice number 2; applies a filter to the data
     elif choice == "2" or choice == "filter" or choice == "apply filter to data":
     
+        #Checks whether data has been loaded
         if specifiedData == True:
+            
             # Variables for interval selecting
             length = len(data)
             numberofRemovals = 0
             
-            strings = np.array(["Temperature","Growth rate","Bacteria type","All"])
+            strings = np.array(["Temperature","Growth rate","Bacteria type"])
 
             while (True):
-    
                 
+                # A loop that takes an input, and checks the validity of the input. The input must be convertable into an int
                 while (True):
                     print("You have the option to create filters based on the following types of data:","1) Temperature","2) Growth rate","3) Bacteria type","\nPlease choose one:", sep='\n')
                     
@@ -342,23 +344,29 @@ while exitScript == False:
                             break
                         except IndexError:
                             print("An incorrect input was given, please try again"," "," ",sep='\n')
-                            
+                
+                # If the input equals to either 1 or 2, a interval on either temperature or growth rate has been selected
                 if choiceofData == "1" or choiceofData == "2":
+                    
+                    # Ask for lower limit in interval
                     print("Please select desired lower limit")
                     xLower = float(input())
                     print("Lower limit: " + str(xLower) + "\nPlease selected desired upper limit")
                     
+                    # Ask for upper limit in interval
                     xUpper = float(input())
                     print("Upper limit: " + str(xUpper))
                     
                     print("Your interval has been set to", xLower, "< data <", xUpper)
                     
                     if choiceofData == "1":
-                        print("Hello")
+                        
+                        # Set filterTemp = true
                         filterTemp = True
                             
                     if choiceofData == "2":
-                        print("Hello")
+                        
+                        # Set filterGrowth = true
                         filterGrowth = True
                     
                     # Creating a for loop that goes through each row
@@ -373,30 +381,41 @@ while exitScript == False:
                     print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
                     filterActive = True
                     
+                # If the input equals 3, a interval based on bacteria type has been selected    
                 elif choiceofData == "3":
-                    print("Please input the Bacteria type")
-                    try:
-                        bacteriaID = int(input())
-                        
-                    except ValueError:
-                        print("You have entered an incorrect input, please try again")
-                        
-                    else:
-                        filterID = True
-                        
-                        # Creating a for loop that goes through each row
-                        for i in range(length):
-                            if data.loc[i,choiceofDataInt] != bacteriaID:
-                                    data = data.drop(i,axis=0)
-                                    numberofRemovals += 1
+                    bacteriaID = 0
                     
-                        print("A total of", numberofRemovals, "rows have been removed from the dataset, and" + str(length - numberofRemovals) + " remain.")
+                    # A loop that breaks when a correct input has been given (1,2, or 3)
+                    while filterID == False:
                         
-                        filterActive = True
+                        # Checks whether the input is convertable into an integer
+                        print("Please input the Bacteria type")
+                        try:
+                            bacteriaID = int(input())
+                            
+                        except ValueError:
+                            print("You have entered an incorrect input, please try again")
+                            
+                        else:
+                            if bacteriaID <= 3 and bacteriaID >= 1:
+                                
+                                # Sets filterID so loop breaks
+                                filterID = True
+                                
+                                # Creating a for loop that goes through each row
+                                for i in range(length):
+                                    if data.loc[i,choiceofDataInt] != bacteriaID:
+                                            data = data.drop(i,axis=0)
+                                            numberofRemovals += 1
+                            
+                                print("A total of", numberofRemovals, "rows have been removed from the dataset, and" + str(length - numberofRemovals) + " remain.")
+                                
+                                filterActive = True
+                            
+                            else:
+                                print("You have entered an incorrect input, please try again")
                 
                 break
-                
-    
                 
                 break
             
@@ -449,6 +468,9 @@ while exitScript == False:
         # Imports the data again to remove filters
         data = dataLoad(name)
         filterActive = False
+        filterTemp = False
+        filterGrowth = False
+        filterID = False
         
         print("\nAll filters have been removed from the data")
         
@@ -459,7 +481,8 @@ while exitScript == False:
         
 """        
 Problemer:
-    - Flere filtrer på én gang giver KeyError
+    - Kode mangler kommentering
+    - Mangler en fuldstændig test
     
     
 """
