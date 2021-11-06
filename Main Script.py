@@ -286,7 +286,7 @@ while exitScript == False:
             print("Growth rate has been filtered by the interval:", xLower, "< data <", xUpper)
             
         if filterID == True:
-            print("Bacteria Listeria has been filtered by the interval:", bacteriaID)
+            print("Bacteria type has been filtered by the interval:", bacteriaID)
 
     
     print(" ","You have the following options:"," ", "1) Load data from file","2) Apply filter to data", "3) Generate statistics from file data","4) Generate data plots from file data","5) Quit the program",sep='\n')
@@ -342,10 +342,11 @@ while exitScript == False:
                         try:
                             print("You have chosen to filter by " + strings[choiceofDataInt] + ".")
                             break
+                        
                         except IndexError:
                             print("An incorrect input was given, please try again"," "," ",sep='\n')
                 
-                # If the input equals to either 1 or 2, a interval on either temperature or growth rate has been selected
+                # If the input equals to either 1 or 2, an interval on either temperature or growth rate has been selected
                 if choiceofData == "1" or choiceofData == "2":
                     
                     # Ask for lower limit in interval
@@ -408,7 +409,7 @@ while exitScript == False:
                                             data = data.drop(i,axis=0)
                                             numberofRemovals += 1
                             
-                                print("A total of", numberofRemovals, "rows have been removed from the dataset, and" + str(length - numberofRemovals) + " remain.")
+                                print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
                                 
                                 filterActive = True
                             
@@ -465,17 +466,28 @@ while exitScript == False:
     # Choice number 6; removes any filters    
     elif choice == "6" or choice == "remove" or choice == "remove filters":
         
-        # Imports the data again to remove filters
-        data = dataLoad(name)
-        filterActive = False
-        filterTemp = False
-        filterGrowth = False
-        filterID = False
+        # Checks if data has been loaded yet
+        if specifiedData == True and filterActive == True:
+            
+            # Imports the data again to remove filters
+            data = dataLoad(name)
+            filterActive = False
+            filterTemp = False
+            filterGrowth = False
+            filterID = False
+            
+            print("\nAll filters have been removed from the data")
+            
+        # If data has not been loaded or if there is no filter active, the loop restarts
+        elif specifiedData == False or filterActive == False:
+            print("There is no filter to remove, please select another option")
         
-        print("\nAll filters have been removed from the data")
+        
         
     else:
         print("An incorrect input was given, please try again")
+        
+
         
         
         
@@ -483,8 +495,10 @@ while exitScript == False:
 Problemer:
     - Kode mangler kommentering
     - Mangler en fuldstændig test
+    - Når programmet fortæller brugeren hvilke filtrer, der er aktive, hvis både
+      Temp-filter og Growth-filter er aktive, så outputtes den samme xUpper og xLower
+      svarende til det nyest tilføjede filter
     
     
 """
-    
     
