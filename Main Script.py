@@ -4,7 +4,6 @@ Project 1 - Bacteria Data Analysis
 By: Lachlan Houston (s214593) og Frederik Ravnborg (s204078)
 Due: 11/11/2021
 """
-
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,10 +11,8 @@ import matplotlib.pyplot as plt
 # =============================================================================
 # 1: Data Load function:
 # =============================================================================
-# The Data Load function is defined, where a file of the user's choice is input:
 def dataLoad(filename):
-    
-    # Importing the data as a matrix using the panda module and handling wrong input
+    # Importing the data as a matrix using the panda module
     while (True):
         try:
             data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
@@ -25,7 +22,6 @@ def dataLoad(filename):
             
         else:
             print("A file has been found and loaded")
-            
             # Calculating the number of rows in the matrix
             datanp = np.array(data)
             shape = np.shape(datanp)
@@ -48,8 +44,7 @@ def dataLoad(filename):
                 elif data.loc[i,2] not in [1,2,3,4]:
                     print("Row",i,"contains an errornous bacteria ID (" + str(data.loc[i,2]) + ") and has been removed")
                     data = data.drop(i,axis=0)
-            
-            # Resetting the indexes in the data        
+                    
             data = data.reset_index(drop=True)
             return data
         break
@@ -74,47 +69,46 @@ def dataStatistics(data, statistic):
     statisticChoice = statistic
     # statisticChoice = statisticChoice.lower()
     
-    # Choice number 1 - computes the Mean Temperature
+    # Choice number 1; computes the Mean Temperature
     if statisticChoice == "1" or statisticChoice == "mean temperature":
-        try:    
+        try:
             result = np.mean(statData[0])
-            result = round(result,3)
-        
         except IndexError:
             result = 0
+        
+        result = round(result,3)
 
-    # Choice number 2 - computes the Mean Temperature
+    # Choice number 2; computes the Mean Growth Rate
     elif statisticChoice == "2" or statisticChoice == "mean growth rate":
-        try:    
+        try:
             result = np.mean(statData[1])
-            result = round(result,3)     
-        
         except IndexError:
             result = 0
+        
+        result = round(result,3)        
     
-    # Choice number 3 - computes the Standard Deviation of the Temperature
+    # Choice number 3; computes the Standard Deviation of the Temperature
     elif statisticChoice == "3" or statisticChoice == "std temperature":
         try:
             result = np.std(statData[0])
-            result = round(result,3)
-        
         except IndexError:
             result = 0
+        #result = round(result,3)
     
-    # Choice number 4 - computes the Standard Deviation of the Growth rate
+    # Choice number 4; computes the Standard Deviation of the Growth rate
     elif statisticChoice == "4" or statisticChoice == "std growth rate":
         try:
             result = np.std(statData[1])
-            result = round(result,3)
-            
         except IndexError:
             result = 0
+            
+        result = round(result,3)
 
-    # Choice number 5 - computes the number of rows
+    # Choice number 5; computes the number of rows
     elif statisticChoice == "5" or statisticChoice == "rows":
         result = np.shape(statData)[0]
 
-    # Choice number 6 - computes the Mean Cold Growth rate
+    # Choice number 6; computes the Mean Cold Growth rate
     elif statisticChoice == "6" or statisticChoice == "mean cold growth rate":
         
         # Loop that loops through the data and finds the elements where the temperature is lower than 20
@@ -135,7 +129,7 @@ def dataStatistics(data, statistic):
         except ZeroDivisionError:
             result = 0
     
-    # Choice number 7 - computes the Mean Hot Growth rate       
+    # Choice number 7; computes the Mean Hot Growth rate       
     elif statisticChoice == "7" or statisticChoice == "mean hot growth rate":
             
         # Loop that loops through and finds the elements where the temperature is higher than 50
@@ -170,13 +164,13 @@ def dataPlot(data):
     # Creating an array containing all the bacteria types
     bacteria_type = np.array(data[2])
     
-    # Computing and storing how many occurences each bacteria has in bacteria_type
+    # Computing how many occurences each bacteria has in bacteria_type
     b1 = np.sum(bacteria_type == 1)
     b2 = np.sum(bacteria_type == 2)
     b3 = np.sum(bacteria_type == 3)
     b4 = np.sum(bacteria_type == 4)
     
-    # Defining the x-axis as bacteria type and the y-axis as the number of the corresponding bacteria
+    # Defining the x and y axis
     x = ['1', '2', '3', '4']
     y = np.array([b1,b2,b3,b4])
     
@@ -279,13 +273,16 @@ def dataPlot(data):
 # Variables are declared
 exitScript = False
 specifiedData = False
+
 filterActive = False
 filterTemp = False
 filterGrowth = False
 filterID = False
 
-xLower = 0
-xUpper = 0
+xLowerTemp = 0
+xUpperTemp = 0
+xLowerGrowth = 0
+xUpperGrowth = 0
 bacteriaID = 0
 
 statisticsStrings = np.array(["1","mean temperature","2","mean growth rate","3","std temperature","4","std growth rate","5","rows","6","mean cold growth rate","7","mean hot growth rate"])
@@ -299,10 +296,10 @@ while exitScript == False:
         print("\nA filter is currently applied to the data")
         
         if filterTemp == True:
-            print("Temperature has been filtered by the interval:", xLower, "< Temperature <", xUpper)
+            print("Temperature has been filtered by the interval:", xLowerTemp, "< data <", xUpperTemp)
             
         if filterGrowth == True:
-            print("Growth rate has been filtered by the interval:", xLower, "< Growth rate <", xUpper)
+            print("Growth rate has been filtered by the interval:", xLowerGrowth, "< data <", xUpperGrowth)
             
         if filterID == True:
             print("Bacteria type has been filtered by the interval:", bacteriaID)
@@ -317,7 +314,7 @@ while exitScript == False:
     choice = choice.lower()
     print(" ")
     
-    # Choice number 1 - calls the dataLoad function
+    # Choice number 1; calls the dataLoad function
     if choice == "1" or choice == "load data" or choice == "load data from file":
         
         print("Please input the name of the file you want to load:")
@@ -332,7 +329,7 @@ while exitScript == False:
         # Stores the data so the functions can access it later
         data = dataLoad(name)
     
-    # Choice number 2 - applies a filter to the data
+    # Choice number 2; applies a filter to the data
     elif choice == "2" or choice == "filter" or choice == "apply filter to data":
     
         #Checks whether data has been loaded
@@ -366,48 +363,81 @@ while exitScript == False:
                             print("An incorrect input was given, please try again"," "," ",sep='\n')
                 
                 # If the input equals to either 1 or 2, an interval on either temperature or growth rate has been selected
-                if choiceofData == "1" or choiceofData == "2":
-                    
-                    # Ask for lower limit in interval
-                    print("Please select desired lower limit")
-                    xLower = float(input())
-                    print("Lower limit: " + str(xLower) + "\nPlease selected desired upper limit")
-                    
-                    # Ask for upper limit in interval
-                    xUpper = float(input())
-                    print("Upper limit: " + str(xUpper))
-                    
-                    print("Your interval has been set to", xLower, "< data <", xUpper)
-                    
+                while (True):
                     if choiceofData == "1":
                         
-                        # Set filterTemp = true
-                        filterTemp = True
+                        try:
+                            # Ask for lower limit in interval
+                            print("Please select desired lower limit")
+                            xLowerTemp = float(input())
+                            print("Lower limit: " + str(xLowerTemp) + "\nPlease selected desired upper limit")
                             
-                    if choiceofData == "2":
-                        
-                        # Set filterGrowth = true
-                        filterGrowth = True
-                    
-                    # Creating a for loop that goes through each row
-                    for i in range(length):
-                    
-                    # Removing rows with data outside the given interval
-                        if data.loc[i,choiceofDataInt] < xLower or data.loc[i,choiceofDataInt] > xUpper:
-                            data = data.drop(i,axis=0)
-                            numberofRemovals += 1
+                            # Ask for upper limit in interval
+                            xUpperTemp = float(input())
+                            print("Upper limit: " + str(xUpperTemp))
                             
-                    data = data.reset_index(drop=True)
-                    print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
-                    filterActive = True
-                    
-                # If the input equals 3, a interval based on bacteria type has been selected    
-                elif choiceofData == "3":
-                    bacteriaID = 0
-                    
-                    # A loop that breaks when a correct input has been given (1,2, or 3)
-                    while filterID == False:
+                            print("Your interval has been set to", xLowerTemp, "< data <", xUpperTemp)
+                        except ValueError:
+                            print("An incorrect input was given, please try again"," "," ",sep='\n')
+                            
+                        else:
+                            filterTemp = True
+                                    
+                            
+                            # Creating a for loop that goes through each row
+                            for i in range(length):
+                            
+                            # Removing rows with data outside the given interval
+                                if data.loc[i,choiceofDataInt] < xLowerTemp or data.loc[i,choiceofDataInt] > xUpperTemp:
+                                    data = data.drop(i,axis=0)
+                                    numberofRemovals += 1
+                                    
+                            data = data.reset_index(drop=True)
+                            print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
+                            filterActive = True
+                            break
                         
+                    elif choiceofData == "2":
+                        
+                        try:
+                            # Ask for lower limit in interval
+                            print("Please select desired lower limit")
+                            xLowerGrowth = float(input())
+                            print("Lower limit: " + str(xLowerGrowth) + "\nPlease selected desired upper limit")
+                            
+                            # Ask for upper limit in interval
+                            xUpperGrowth = float(input())
+                            print("Upper limit: " + str(xUpperGrowth))
+                            
+                            print("Your interval has been set to", xLowerGrowth, "< data <", xUpperGrowth)
+                        
+                        except ValueError:
+                            print("An incorrect input was given, please try again"," "," ",sep='\n')
+                            
+                        else:
+                            filterGrowth = True
+                                    
+                            
+                            # Creating a for loop that goes through each row
+                            for i in range(length):
+                            
+                            # Removing rows with data outside the given interval
+                                if data.loc[i,choiceofDataInt] < xLowerGrowth or data.loc[i,choiceofDataInt] > xUpperGrowth:
+                                    data = data.drop(i,axis=0)
+                                    numberofRemovals += 1
+                                    
+                            data = data.reset_index(drop=True)
+                            print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
+                            filterActive = True
+                            break
+                        
+                    # If the input equals 3, a interval based on bacteria type has been selected    
+                    elif choiceofData == "3":
+                        bacteriaID = 0
+                        
+                        # A loop that breaks when a correct input has been given (1,2, or 3)
+                        # while filterID == False:
+                            
                         # Checks whether the input is convertable into an integer
                         print("Please input the Bacteria type")
                         try:
@@ -417,7 +447,7 @@ while exitScript == False:
                             print("You have entered an incorrect input, please try again")
                             
                         else:
-                            if bacteriaID <= 3 and bacteriaID >= 1:
+                            if bacteriaID <= 4 and bacteriaID >= 1:
                                 
                                 # Sets filterID so loop breaks
                                 filterID = True
@@ -431,10 +461,12 @@ while exitScript == False:
                                 print("A total of", numberofRemovals, "rows have been removed from the dataset, and " + str(length - numberofRemovals) + " remain.")
                                 
                                 filterActive = True
+                                break
                             
                             else:
                                 print("You have entered an incorrect input, please try again")
                 
+                data = data.reset_index(drop=True)
                 break
                 
                 break
@@ -443,7 +475,7 @@ while exitScript == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
 
     
-    # Choice number 3 - calls the dataStatistics function
+    # Choice number 3; calls the dataStatistics function
     elif choice == "3" or choice == "statistics" or choice == "generate statistics from file data":
         
         # Checks if data has been loaded yet
@@ -455,7 +487,7 @@ while exitScript == False:
             statistic = statistic.lower()
             
             if dataStatistics(data, statistic) == 0:
-                print("An incorrect input was given, please try again")
+                print("The data could not be calculated from the data given, please try again")
                 
             else:
                 print("The result is:", dataStatistics(data, statistic))
@@ -464,7 +496,7 @@ while exitScript == False:
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
         
-    # Choice number 4 - calls the dataPlot function
+    # Choice number 4; calls the dataPlot function
     elif choice == "4" or choice == "plots" or choice == "generate data plots from file data":
         
         # Checks if data has been loaded yet
@@ -475,14 +507,14 @@ while exitScript == False:
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
         
-    # Choice number 5 - ends the program
+    # Choice number 5; ends the program
     elif choice == "5" or choice == "quit" or choice == "quit the program":
         
         # Changes exitScript to True and therefore closes the loop and ends the program
         print("Ending program.")
         exitScript = True
     
-    # Choice number 6 - removes any filters    
+    # Choice number 6; removes any filters    
     elif choice == "6" or choice == "remove" or choice == "remove filters":
         
         # Checks if data has been loaded yet
@@ -511,13 +543,10 @@ while exitScript == False:
         
         
 """        
-Opgaver:
+Problemer:
+    - Kode mangler kommentering
     - Mangler en fuldstændig test
-    - Når programmet fortæller brugeren hvilke filtrer, der er aktive, hvis både
-      Temp-filter og Growth-filter er aktive, så outputtes den samme xUpper og xLower
-      svarende til det nyest tilføjede filter
-    - Gennemlæsning af kommentering
-    - 
+    
     
 """
     
