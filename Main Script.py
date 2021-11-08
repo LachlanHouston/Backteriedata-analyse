@@ -53,9 +53,9 @@ def dataLoad(filename):
 
 
 # =============================================================================
-# 2: Data Statistics function:
+# 2: Data Statistic function:
 # =============================================================================
-# The Data Statistics function is defined, where data from file and a string 'statistics' are input:
+# The Data Statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
 
     # Local variables are defined
@@ -298,10 +298,10 @@ while exitScript == False:
         print("\nA filter is currently applied to the data")
         
         if filterTemp == True:
-            print("Temperature has been filtered by the interval:", xLowerTemp, "< data <", xUpperTemp)
+            print("Temperature has been filtered by the interval:", xLowerTemp, "< Temperature <", xUpperTemp)
             
         if filterGrowth == True:
-            print("Growth rate has been filtered by the interval:", xLowerGrowth, "< data <", xUpperGrowth)
+            print("Growth rate has been filtered by the interval:", xLowerGrowth, "< Growth rate <", xUpperGrowth)
             
         if filterID == True:
             print("Bacteria type has been filtered by the interval:", bacteriaID)
@@ -316,7 +316,7 @@ while exitScript == False:
     choice = choice.lower()
     print(" ")
     
-    # Choice number 1 - calls the Data Load function
+    # Choice number 1 - calls the dataLoad function
     if choice == "1" or choice == "load data" or choice == "load data from file":
         
         print("Please input the name of the file you want to load:")
