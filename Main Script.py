@@ -11,8 +11,9 @@ import matplotlib.pyplot as plt
 # =============================================================================
 # 1: Data Load function:
 # =============================================================================
+# The Data Load function is defined, where a file of the user's choice is input:
 def dataLoad(filename):
-    # Importing the data as a matrix using the panda module
+    # Importing the data as a matrix using the panda module and handling wrong input
     while (True):
         try:
             data = pd.read_csv(filename, header=None, delimiter=' ', usecols=[0,1,2])
@@ -44,16 +45,17 @@ def dataLoad(filename):
                 elif data.loc[i,2] not in [1,2,3,4]:
                     print("Row",i,"contains an errornous bacteria ID (" + str(data.loc[i,2]) + ") and has been removed")
                     data = data.drop(i,axis=0)
-                    
+            
+            # Resetting the indexes in the data                            
             data = data.reset_index(drop=True)
             return data
         break
 
 
 # =============================================================================
-# 2: Data Statistic function:
+# 2: Data Statistics function:
 # =============================================================================
-# The Data Statistic function is defined, where data from file and a string 'statistics' are input:
+# The Data Statistics function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
 
     # Local variables are defined
@@ -69,7 +71,7 @@ def dataStatistics(data, statistic):
     statisticChoice = statistic
     # statisticChoice = statisticChoice.lower()
     
-    # Choice number 1; computes the Mean Temperature
+    # Choice number 1 - computes the Mean Temperature
     if statisticChoice == "1" or statisticChoice == "mean temperature":
         try:
             result = np.mean(statData[0])
@@ -78,7 +80,7 @@ def dataStatistics(data, statistic):
         
         result = round(result,3)
 
-    # Choice number 2; computes the Mean Growth Rate
+    # Choice number 2 - computes the Mean Growth Rate
     elif statisticChoice == "2" or statisticChoice == "mean growth rate":
         try:
             result = np.mean(statData[1])
@@ -87,7 +89,7 @@ def dataStatistics(data, statistic):
         
         result = round(result,3)        
     
-    # Choice number 3; computes the Standard Deviation of the Temperature
+    # Choice number 3 - computes the Standard Deviation of the Temperature
     elif statisticChoice == "3" or statisticChoice == "std temperature":
         try:
             result = np.std(statData[0])
@@ -95,7 +97,7 @@ def dataStatistics(data, statistic):
             result = 0
         #result = round(result,3)
     
-    # Choice number 4; computes the Standard Deviation of the Growth rate
+    # Choice number 4 - computes the Standard Deviation of the Growth rate
     elif statisticChoice == "4" or statisticChoice == "std growth rate":
         try:
             result = np.std(statData[1])
@@ -104,11 +106,11 @@ def dataStatistics(data, statistic):
             
         result = round(result,3)
 
-    # Choice number 5; computes the number of rows
+    # Choice number 5 - computes the number of rows
     elif statisticChoice == "5" or statisticChoice == "rows":
         result = np.shape(statData)[0]
 
-    # Choice number 6; computes the Mean Cold Growth rate
+    # Choice number 6 - computes the Mean Cold Growth rate
     elif statisticChoice == "6" or statisticChoice == "mean cold growth rate":
         
         # Loop that loops through the data and finds the elements where the temperature is lower than 20
@@ -129,7 +131,7 @@ def dataStatistics(data, statistic):
         except ZeroDivisionError:
             result = 0
     
-    # Choice number 7; computes the Mean Hot Growth rate       
+    # Choice number 7 - computes the Mean Hot Growth rate       
     elif statisticChoice == "7" or statisticChoice == "mean hot growth rate":
             
         # Loop that loops through and finds the elements where the temperature is higher than 50
@@ -164,13 +166,13 @@ def dataPlot(data):
     # Creating an array containing all the bacteria types
     bacteria_type = np.array(data[2])
     
-    # Computing how many occurences each bacteria has in bacteria_type
+    # Computing and storing how many occurences each bacteria has in bacteria_type
     b1 = np.sum(bacteria_type == 1)
     b2 = np.sum(bacteria_type == 2)
     b3 = np.sum(bacteria_type == 3)
     b4 = np.sum(bacteria_type == 4)
     
-    # Defining the x and y axis
+    # Defining the x-axis as bacteria type and the y-axis as the number of the corresponding bacteria
     x = ['1', '2', '3', '4']
     y = np.array([b1,b2,b3,b4])
     
@@ -314,7 +316,7 @@ while exitScript == False:
     choice = choice.lower()
     print(" ")
     
-    # Choice number 1; calls the dataLoad function
+    # Choice number 1 - calls the Data Load function
     if choice == "1" or choice == "load data" or choice == "load data from file":
         
         print("Please input the name of the file you want to load:")
@@ -329,7 +331,7 @@ while exitScript == False:
         # Stores the data so the functions can access it later
         data = dataLoad(name)
     
-    # Choice number 2; applies a filter to the data
+    # Choice number 2 - applies a filter to the data
     elif choice == "2" or choice == "filter" or choice == "apply filter to data":
     
         #Checks whether data has been loaded
@@ -475,7 +477,7 @@ while exitScript == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
 
     
-    # Choice number 3; calls the dataStatistics function
+    # Choice number 3 - calls the dataStatistics function
     elif choice == "3" or choice == "statistics" or choice == "generate statistics from file data":
         
         # Checks if data has been loaded yet
@@ -496,7 +498,7 @@ while exitScript == False:
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
         
-    # Choice number 4; calls the dataPlot function
+    # Choice number 4 - calls the dataPlot function
     elif choice == "4" or choice == "plots" or choice == "generate data plots from file data":
         
         # Checks if data has been loaded yet
@@ -507,14 +509,14 @@ while exitScript == False:
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
         
-    # Choice number 5; ends the program
+    # Choice number 5 - ends the program
     elif choice == "5" or choice == "quit" or choice == "quit the program":
         
         # Changes exitScript to True and therefore closes the loop and ends the program
         print("Ending program.")
         exitScript = True
     
-    # Choice number 6; removes any filters    
+    # Choice number 6 - removes any filters    
     elif choice == "6" or choice == "remove" or choice == "remove filters":
         
         # Checks if data has been loaded yet
