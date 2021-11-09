@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 
 # =============================================================================
 # 1: Data Load function:
+# Frederik Ravnborg (s204078):
 # =============================================================================
 # The Data Load function is defined, where a file of the user's choice is input:
 def dataLoad(filename):
@@ -54,6 +55,7 @@ def dataLoad(filename):
 
 # =============================================================================
 # 2: Data Statistic function:
+# Lachlan Houston (s214593):
 # =============================================================================
 # The Data Statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
@@ -160,6 +162,7 @@ def dataStatistics(data, statistic):
 
 # =============================================================================
 # 3: Data Plot function:
+# Frederik Ravnborg (s204078):
 # =============================================================================
 def dataPlot(data):
     
@@ -291,6 +294,7 @@ statisticsStrings = np.array(["1","mean temperature","2","mean growth rate","3",
 
 # =============================================================================
 # A loop is initiated that doesn't close until the user specifically closes the program
+# Frederik Ravnborg (s204078):
 # =============================================================================
 while exitScript == False:
 
@@ -331,6 +335,11 @@ while exitScript == False:
         # Stores the data so the functions can access it later
         data = dataLoad(name)
     
+    
+# =============================================================================
+# Interval code:
+# Lachlan Houston (s214593):
+# =============================================================================
     # Choice number 2 - applies a filter to the data
     elif choice == "2" or choice == "filter" or choice == "apply filter to data":
     
@@ -477,6 +486,11 @@ while exitScript == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
 
     
+
+# =============================================================================
+# dataStatistics code:
+# Lachlan Houston (s214593):
+# =============================================================================
     # Choice number 3 - calls the dataStatistics function
     elif choice == "3" or choice == "statistics" or choice == "generate statistics from file data":
         
@@ -497,7 +511,12 @@ while exitScript == False:
         # If data has not been loaded, the loop restarts
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
+    
         
+# =============================================================================
+# dataPlot + End Program code
+# Frederik Ravnborg (s204078):
+# =============================================================================
     # Choice number 4 - calls the dataPlot function
     elif choice == "4" or choice == "plots" or choice == "generate data plots from file data":
         
@@ -516,6 +535,11 @@ while exitScript == False:
         print("Ending program.")
         exitScript = True
     
+    
+# =============================================================================
+# Remove filters code:
+# Frederik Ravnborg (s204078):'
+# =============================================================================
     # Choice number 6 - removes any filters    
     elif choice == "6" or choice == "remove" or choice == "remove filters":
         
@@ -547,8 +571,5 @@ while exitScript == False:
 """        
 Problemer:
     - Kode mangler kommentering
-    - Mangler en fuldstændig test
-    
-    
 """
     
