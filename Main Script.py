@@ -559,17 +559,5 @@ while exitScript == False:
         elif specifiedData == False or filterActive == False:
             print("There is no filter to remove, please select another option")
         
-        
-        
     else:
         print("An incorrect input was given, please try again")
-        
-
-        
-        
-        
-"""        
-Problemer:
-    - Kode mangler kommentering
-"""
-    
