@@ -5,6 +5,7 @@ By: Lachlan Houston (s214593) og Frederik Ravnborg (s204078)
 Due: 11/11/2021
 """
 import numpy as np
+np.set_printoptions(suppress = True)
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -76,7 +77,7 @@ def dataStatistics(data, statistic):
     # Choice number 1 - computes the Mean Temperature
     if statisticChoice == "1" or statisticChoice == "mean temperature":
         try:
-            result = np.mean(statData[0])
+            result = np.mean(statData[:,0])
         except IndexError:
             result = 0
         
@@ -85,7 +86,7 @@ def dataStatistics(data, statistic):
     # Choice number 2 - computes the Mean Growth Rate
     elif statisticChoice == "2" or statisticChoice == "mean growth rate":
         try:
-            result = np.mean(statData[1])
+            result = np.mean(statData[:,1])
         except IndexError:
             result = 0
         
@@ -94,15 +95,15 @@ def dataStatistics(data, statistic):
     # Choice number 3 - computes the Standard Deviation of the Temperature
     elif statisticChoice == "3" or statisticChoice == "std temperature":
         try:
-            result = np.std(statData[0])
+            result = np.std(statData[:,0])
         except IndexError:
             result = 0
-        #result = round(result,3)
+        result = round(result,3)
     
     # Choice number 4 - computes the Standard Deviation of the Growth rate
     elif statisticChoice == "4" or statisticChoice == "std growth rate":
         try:
-            result = np.std(statData[1])
+            result = np.std(statData[:,1])
         except IndexError:
             result = 0
             
