@@ -4,6 +4,7 @@ Project 1 - Bacteria Data Analysis
 By: Lachlan Houston (s214593) og Frederik Ravnborg (s204078)
 Due: 11/11/2021
 """
+# Packages are imported and defined
 import numpy as np
 np.set_printoptions(suppress = True)
 import pandas as pd
@@ -11,7 +12,7 @@ import matplotlib.pyplot as plt
 
 # =============================================================================
 # 1: Data Load function:
-# Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078):
 # =============================================================================
 # The Data Load function is defined, where a file of the user's choice is input:
 def dataLoad(filename):
@@ -56,7 +57,7 @@ def dataLoad(filename):
 
 # =============================================================================
 # 2: Data Statistic function:
-# Lachlan Houston (s214593):
+# @Lachlan Houston (s214593):
 # =============================================================================
 # The Data Statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
@@ -163,7 +164,7 @@ def dataStatistics(data, statistic):
 
 # =============================================================================
 # 3: Data Plot function:
-# Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078):
 # =============================================================================
 def dataPlot(data):
     
@@ -277,14 +278,17 @@ def dataPlot(data):
 # =============================================================================
 
 # Variables are declared
+# Variables that maintain access to the loop or parts within
 exitScript = False
 specifiedData = False
 
+# Variables that save information on which interval filter are active or inactive
 filterActive = False
 filterTemp = False
 filterGrowth = False
 filterID = False
 
+# Specific variables that contain data values in relation to filtering
 xLowerTemp = 0
 xUpperTemp = 0
 xLowerGrowth = 0
@@ -295,10 +299,11 @@ statisticsStrings = np.array(["1","mean temperature","2","mean growth rate","3",
 
 # =============================================================================
 # A loop is initiated that doesn't close until the user specifically closes the program
-# Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078):
 # =============================================================================
 while exitScript == False:
-
+    
+    # If there is an active filter, this set of if statements shows which and the intervals/values
     if filterActive == True:
         print("\nA filter is currently applied to the data")
         
@@ -311,11 +316,14 @@ while exitScript == False:
         if filterID == True:
             print("Bacteria type has been filtered by the interval:", bacteriaID)
 
-    
+    # Presents the user with options
     print(" ","You have the following options:"," ", "1) Load data from file","2) Apply filter to data", "3) Generate statistics from file data","4) Generate data plots from file data","5) Quit the program",sep='\n')
+    
+    # Only show "Remove filters" if an active filter is currently set to true
     if filterActive == True:
         print("6) Remove filters")
     print("\nPlease type what you want to do:")
+    
     # Choice contains the input that correlates to what the user wants to access
     choice = input()
     choice = choice.lower()
@@ -339,7 +347,7 @@ while exitScript == False:
     
 # =============================================================================
 # Interval code:
-# Lachlan Houston (s214593):
+# @Lachlan Houston (s214593):
 # =============================================================================
     # Choice number 2 - applies a filter to the data
     elif choice == "2" or choice == "filter" or choice == "apply filter to data":
@@ -478,6 +486,7 @@ while exitScript == False:
                             else:
                                 print("You have entered an incorrect input, please try again")
                 
+                # Resets the data matrix to avoid future key errors
                 data = data.reset_index(drop=True)
                 break
                 
@@ -490,7 +499,7 @@ while exitScript == False:
 
 # =============================================================================
 # dataStatistics code:
-# Lachlan Houston (s214593):
+# @Lachlan Houston (s214593):
 # =============================================================================
     # Choice number 3 - calls the dataStatistics function
     elif choice == "3" or choice == "statistics" or choice == "generate statistics from file data":
@@ -503,6 +512,7 @@ while exitScript == False:
             statistic = input()
             statistic = statistic.lower()
             
+            # Checks if the results equal 0, as if this is the case means the data frame is empty
             if dataStatistics(data, statistic) == 0:
                 print("The data could not be calculated from the data given, please try again")
                 
@@ -516,7 +526,7 @@ while exitScript == False:
         
 # =============================================================================
 # dataPlot + End Program code
-# Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078):
 # =============================================================================
     # Choice number 4 - calls the dataPlot function
     elif choice == "4" or choice == "plots" or choice == "generate data plots from file data":
@@ -539,7 +549,7 @@ while exitScript == False:
     
 # =============================================================================
 # Remove filters code:
-# Frederik Ravnborg (s204078):'
+# @Frederik Ravnborg (s204078):'
 # =============================================================================
     # Choice number 6 - removes any filters    
     elif choice == "6" or choice == "remove" or choice == "remove filters":
