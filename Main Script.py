@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 
 # =============================================================================
 # 1: Data Load function:
-# @Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078)
 # =============================================================================
 # The Data Load function is defined, where a file of the user's choice is input:
 def dataLoad(filename):
@@ -57,7 +57,7 @@ def dataLoad(filename):
 
 # =============================================================================
 # 2: Data Statistic function:
-# @Lachlan Houston (s214593):
+# @Lachlan Houston (s214593)
 # =============================================================================
 # The Data Statistic function is defined, where data from file and a string 'statistics' are input:
 def dataStatistics(data, statistic):
@@ -164,7 +164,7 @@ def dataStatistics(data, statistic):
 
 # =============================================================================
 # 3: Data Plot function:
-# @Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078)
 # =============================================================================
 def dataPlot(data):
     
@@ -270,7 +270,6 @@ def dataPlot(data):
     plt.legend(["Bacteria 1", "Bacteria 2", "Bacteria 3", "Bacteria 4"], loc ="upper left")
     plt.show()
     
-    return("Generate data plots from file data has been selected\n\nThe first plot shows how many of each bacteria type there is in the dataset.\nThe second plot shows graphs representing growth rate by temperature for each selected bacteria type.")
 
 
 # =============================================================================
@@ -299,13 +298,13 @@ statisticsStrings = np.array(["1","mean temperature","2","mean growth rate","3",
 
 # =============================================================================
 # A loop is initiated that doesn't close until the user specifically closes the program
-# @Frederik Ravnborg (s204078):
+# @Frederik Ravnborg (s204078)
 # =============================================================================
 while exitScript == False:
     
     # If there is an active filter, this set of if statements shows which and the intervals/values
     if filterActive == True:
-        print("\nA filter is currently applied to the data")
+        print("\nA filter is currently applied to the data.")
         
         if filterTemp == True:
             print("Temperature has been filtered by the interval:", xLowerTemp, "< Temperature <", xUpperTemp)
@@ -314,7 +313,7 @@ while exitScript == False:
             print("Growth rate has been filtered by the interval:", xLowerGrowth, "< Growth rate <", xUpperGrowth)
             
         if filterID == True:
-            print("Bacteria type has been filtered by the interval:", bacteriaID)
+            print("Bacteria type has been filtered to only include bacteria", bacteriaID)
 
     # Presents the user with options
     print(" ","You have the following options:"," ", "1) Load data from file","2) Apply filter to data", "3) Generate statistics from file data","4) Generate data plots from file data","5) Quit the program",sep='\n')
@@ -347,7 +346,7 @@ while exitScript == False:
     
 # =============================================================================
 # Interval code:
-# @Lachlan Houston (s214593):
+# @Lachlan Houston (s214593)
 # =============================================================================
     # Choice number 2 - applies a filter to the data
     elif choice == "2" or choice == "filter" or choice == "apply filter to data":
@@ -459,7 +458,7 @@ while exitScript == False:
                         # while filterID == False:
                             
                         # Checks whether the input is convertable into an integer
-                        print("Please input the Bacteria type")
+                        print("Please input the Bacteria type number")
                         try:
                             bacteriaID = int(input())
                             
@@ -499,7 +498,7 @@ while exitScript == False:
 
 # =============================================================================
 # dataStatistics code:
-# @Lachlan Houston (s214593):
+# @Lachlan Houston (s214593)
 # =============================================================================
     # Choice number 3 - calls the dataStatistics function
     elif choice == "3" or choice == "statistics" or choice == "generate statistics from file data":
@@ -525,16 +524,17 @@ while exitScript == False:
     
         
 # =============================================================================
-# dataPlot + End Program code
-# @Frederik Ravnborg (s204078):
+# dataPlot + End Program code:
+# @Frederik Ravnborg (s204078)
 # =============================================================================
     # Choice number 4 - calls the dataPlot function
     elif choice == "4" or choice == "plots" or choice == "generate data plots from file data":
         
         # Checks if data has been loaded yet
         if specifiedData == True:
-            print(dataPlot(data))
-            
+            dataPlot(data)
+            print("Generate data plots from file data has been selected\n\nThe first plot shows how many of each bacteria type there is in the dataset.\nThe second plot shows graphs representing growth rate by temperature for each selected bacteria type.")
+
         # If data has not been loaded, the loop restarts
         elif specifiedData == False:
             print("A data file has not yet been input, please begin by loading data (Option 1)")
@@ -549,7 +549,7 @@ while exitScript == False:
     
 # =============================================================================
 # Remove filters code:
-# @Frederik Ravnborg (s204078):'
+# @Frederik Ravnborg (s204078)
 # =============================================================================
     # Choice number 6 - removes any filters    
     elif choice == "6" or choice == "remove" or choice == "remove filters":
