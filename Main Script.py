@@ -10,6 +10,8 @@ np.set_printoptions(suppress = True)
 import pandas as pd
 import matplotlib.pyplot as plt
 
+### Hello, this is a test
+
 # =============================================================================
 # 1: Data Load function:
 # @Frederik Ravnborg (s204078)
